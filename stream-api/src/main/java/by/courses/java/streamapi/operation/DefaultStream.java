@@ -50,7 +50,7 @@ public class DefaultStream implements Operation<UserBase> {
     @Override
     public boolean isCharacterPresentInAllNames(Collection<UserBase> entities, String character) {
         return entities.stream()
-                .allMatch(elem -> elem.getName().indexOf(character) != -1);
+                .allMatch(elem -> elem.getName().toLowerCase().indexOf(character.toLowerCase()) != -1);
     }
 
     @Override
