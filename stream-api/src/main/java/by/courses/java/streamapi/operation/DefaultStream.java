@@ -11,8 +11,7 @@ public class DefaultStream implements Operation<UserBase> {
     @Override
     public Collection<UserBase> removeWithMaxAge(Collection<UserBase> entities) {
         return entities.stream()
-                .sorted(Comparator.comparing(UserBase::getAge))
-                .limit(entities.stream().count()-1)
+                .filter(elem -> elem.getAge() < entities.stream().mapToInt(UserBase::getAge).max().getAsInt())
                 .collect(Collectors.toList());
     }
 
