@@ -38,13 +38,14 @@ public class DefaultStream implements Operation<UserBase> {
 
     @Override
     public boolean isCharacterPresentInAllNames(Collection<UserBase> entities, String character) {
-        return false;
+        return entities.stream()
+                .allMatch(elem -> elem.getName().indexOf(character) != -1);
     }
 
     @Override
     public Collection<UserBase> addValueToAllNames(Collection<UserBase> entities, String value) {
         return entities.stream()
-                .map(elem -> new UserBase(elem.getName()+value, elem.getAge()))
+                .map(elem -> new UserBase(elem.getName() + value, elem.getAge()))
                 .collect(Collectors.toList());
     }
 
