@@ -10,13 +10,16 @@ public class DefaultStream implements Operation<UserBase> {
 
     @Override
     public Collection<UserBase> removeWithMaxAge(Collection<UserBase> entities) {
-        return null;
+        return entities.stream()
+                .sorted(Comparator.comparing(UserBase::getAge))
+                .limit(entities.stream().count()-1)
+                .collect(Collectors.toList());
     }
 
     @Override
     public Collection<UserBase> removeAllOlder(Collection<UserBase> entities, int age) {
-        entities.stream()
-                .filter(elem -> elem.getAge <= age)
+        return entities.stream()
+                .filter(elem -> elem.getAge() <= age)
                 .collect(Collectors.toList());
     }
 
@@ -53,7 +56,7 @@ public class DefaultStream implements Operation<UserBase> {
     @Override
     public Collection<UserBase> addValueToAllNames(Collection<UserBase> entities, String value) {
         return entities.stream()
-                .map(elem -> new UserBase(elem.getName() + value, elem.getAge()))
+                .map(elem -> UserBase.of(elem.getName() + value, elem.getAge()))
                 .collect(Collectors.toList());
     }
 
