@@ -43,7 +43,9 @@ public class DefaultStream implements Operation<UserBase> {
 
     @Override
     public Collection<UserBase> addValueToAllNames(Collection<UserBase> entities, String value) {
-        return null;
+        return entities.stream()
+                .map(elem -> new UserBase(elem.getName()+value, elem.getAge()))
+                .collect(Collectors.toList());
     }
 
     @Override
